@@ -1,0 +1,18 @@
+# Python virtual environment
+venv/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# macOS
+.DS_Store
+
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# VSCode settings
+.vscode/

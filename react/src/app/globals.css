@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes progress {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s ease-out;
+}
+
+.animate-progress {
+  animation: progress 2s ease-in-out infinite;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease;
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.button-animated-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.button-animated-border .border-anim {
+  position: absolute;
+  background: #818cf8;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.button-animated-border .border-anim.left {
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.15s linear;
+}
+
+.button-animated-border:hover .border-anim.left {
+  transform: scaleY(1);
+  transition-delay: 0s;
+}
+
+.button-animated-border .border-anim.top {
+  left: 0;
+  top: 0;
+  height: 2px;
+  right: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.15s linear;
+}
+
+.button-animated-border:hover .border-anim.top {
+  transform: scaleX(1);
+  transition-delay: 0.15s;
+}
+
+.button-animated-border .border-anim.right {
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.15s linear;
+}
+
+.button-animated-border:hover .border-anim.right {
+  transform: scaleY(1);
+  transition-delay: 0.3s;
+}
+
+.button-animated-border .border-anim.bottom {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.15s linear;
+}
+
+.button-animated-border:hover .border-anim.bottom {
+  transform: scaleX(1);
+  transition-delay: 0.45s;
+}
