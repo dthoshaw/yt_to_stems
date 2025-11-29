@@ -12,7 +12,7 @@
 
 2. **Install dependencies**
     - Make sure you have Python 3.9+ and Node.js installed.
-    - (Optional) Create and activate a virtual environment:
+    - (Optional/Recommended) Create and activate a virtual environment:
        ```
        python -m venv venv
        # On Windows:
@@ -24,7 +24,7 @@
        ```
        pip install -r requirements.txt
        ```
-    - Install Node.js dependencies as needed (see frontend instructions if applicable).
+    - Install Node.js dependencies as needed.
 
 3. **Run the app**
    - Use the provided `start.bat` script (Windows) to launch both the backend and frontend.
@@ -32,8 +32,8 @@
      ```
      start.bat
      ```
-   - Use the provided 'startMacOS.sh' script for MacOS
-    ```
+   - Use the provided 'startMacOS.sh' script for MacOS:
+     ```
      startMacOS.sh
      ```
 
