@@ -327,7 +327,7 @@ export default function Home() {
                           </a>
                         )}
                       </div>
-\
+
                       {(job.bpm || job.key) && (
                         <div className="flex gap-3 ml-7 mb-2">
                           {job.bpm && (
