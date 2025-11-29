@@ -1,4 +1,5 @@
 # converter.py
+# Converts YouTube URL to MP3 files
 import os
 import argparse
 from typing import Tuple, Optional
@@ -12,12 +13,8 @@ def download_yt_to_mp3(
     output_path: str,
     max_duration: int = 360,  # 6 minutes in seconds
 ) -> Tuple[str, int]:
-    """
-    Downloads YouTube audio to MP3 with title and duration check.
 
-    Returns:
-        (title, duration_seconds)
-    """
+
     temp_template = os.path.join(os.path.dirname(output_path), 'temp_yt_%(id)s')
     video_id = None
 
@@ -35,7 +32,7 @@ def download_yt_to_mp3(
         }],
         'extractor_args': {
             'youtube': {
-                'player_client': ['web', 'mweb', 'android'],   # most reliable combo in 2025
+                'player_client': ['web', 'mweb', 'android'],  
                 'skip': ['dash', 'hls'],
             }
         },
@@ -56,7 +53,6 @@ def download_yt_to_mp3(
         if not os.path.exists(temp_mp3):
             raise RuntimeError("MP3 not created.")
 
-        # Copy to final path
         final_audio = AudioSegment.from_file(temp_mp3)
         final_audio.export(output_path, format="mp3", bitrate="192k")
         print(f"Downloaded: {os.path.basename(output_path)} ({duration}s)")
@@ -64,7 +60,6 @@ def download_yt_to_mp3(
     except Exception as e:
         raise e
     finally:
-        # Cleanup
         if video_id:
             for ext in ['.mp3', '.webm', '.m4a', '.opus']:
                 f = f"{temp_template.replace('%(id)s', video_id)}{ext}"

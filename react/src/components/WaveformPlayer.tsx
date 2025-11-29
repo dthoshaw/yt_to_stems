@@ -81,7 +81,6 @@ export default function WaveformPlayer({ src, name }: WaveformPlayerProps) {
     setDuration(audioRef.current.duration);
   };
 
-  // Ensure play/x button resets if another audio starts playing
   useEffect(() => {
     const onPlay = (e: Event) => {
       if (!audioRef.current) return;
@@ -95,7 +94,6 @@ export default function WaveformPlayer({ src, name }: WaveformPlayerProps) {
     };
   }, []);
 
-  // Utility to stop all other audio players
   function stopAllAudioExcept(current: HTMLAudioElement | null) {
     const audios = document.querySelectorAll("audio");
     audios.forEach(audio => {

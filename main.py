@@ -1,4 +1,5 @@
-# main.py   ←  ONE FILE. MODERN AI SAAS STYLE. 100% WORKING
+# main.py
+# Connevts a FastAPI web interface to the youtube_to_stems pipeline
 from fastapi import FastAPI, Form, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, FileResponse, JSONResponse
@@ -16,7 +17,7 @@ from pipeline import youtube_to_stems
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for local dev
+    allow_origins=["*"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -28,13 +29,10 @@ templates = Jinja2Templates(directory="templates")
 OUTPUT_ROOT = Path("./temp_jobs")
 OUTPUT_ROOT.mkdir(exist_ok=True)
 
-
-
-# Job queue and worker
 job_queue = deque()
 queue_lock = threading.Lock()
 current_job = None
-completed_jobs = []  # In-memory session-only completed jobs
+completed_jobs = []  # Store completed jobs for this session
 
 
 def job_worker():
@@ -106,13 +104,12 @@ def job_worker():
 worker_thread = threading.Thread(target=job_worker, daemon=True)
 worker_thread.start()
 
-# Endpoint to list completed jobs for this session only
+#List of completed jobs
 @app.get("/completed")
 async def completed_jobs_endpoint():
-    # Most recent first
     return JSONResponse({"completed": list(reversed(completed_jobs))})
 
-
+# Removes job from queue
 @app.post("/remove_job/{job_id}")
 async def remove_job(job_id: str):
     with queue_lock:
@@ -127,8 +124,6 @@ async def remove_job(job_id: str):
 async def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
-
-
 @app.post("/start")
 async def start(url: str = Form(...), name: str = Form(...), mode: str = Form('stem')):
     job_id = str(uuid.uuid4())[:8]
@@ -140,13 +135,12 @@ async def start(url: str = Form(...), name: str = Form(...), mode: str = Form('s
     with queue_lock:
         job_queue.append(job)
     return JSONResponse({"job_id": job_id, "song_name": name, "output_folder": str(final_dir)})
-# New endpoint: get current job queue
+
 @app.get("/queue")
 async def get_queue():
     with queue_lock:
         queue_list = list(job_queue)
     return JSONResponse({"queue": queue_list, "current_job": current_job})
-
 
 @app.get("/job/{job_id}/{song_name}", response_class=HTMLResponse)
 async def job_page(request: Request, job_id: str, song_name: str):
@@ -157,19 +151,9 @@ async def job_page(request: Request, job_id: str, song_name: str):
         "OUTPUT_ROOT": OUTPUT_ROOT
     })
 
-
 @app.get("/download/{job_id}/{song_name}/{filename}")
 async def download(job_id: str, song_name: str, filename: str):
     return FileResponse(OUTPUT_ROOT / job_id / song_name / filename, filename=filename)
-
-
-@app.get("/zip/{job_id}/{song_name}")
-async def zip_download(job_id: str, song_name: str):
-    folder = OUTPUT_ROOT / job_id / song_name
-    zip_path = OUTPUT_ROOT / f"{job_id}_{song_name}.zip"
-    shutil.make_archive(zip_path.with_suffix(""), "zip", folder)
-    return FileResponse(f"{zip_path}.zip", filename=f"{song_name}_stems.zip")
-
 
 @app.get("/status/{job_id}")
 async def get_status(job_id: str):

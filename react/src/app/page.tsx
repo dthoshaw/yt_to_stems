@@ -74,7 +74,7 @@ export default function Home() {
     };
 
     pollStatus();
-    const interval = setInterval(pollStatus, 500); // 500ms
+    const interval = setInterval(pollStatus, 500); 
     return () => {
       clearInterval(interval);
     };
@@ -91,11 +91,11 @@ export default function Home() {
           setCurrentJob(data.current_job || null);
         }
       } catch (err) {
-        // Ignore errors for queue polling
+        console.error("Error polling queue:", err);
       }
     };
     pollQueue();
-    const interval = setInterval(pollQueue, 500); // 500ms
+    const interval = setInterval(pollQueue, 500);
     return () => clearInterval(interval);
   }, []);
 
@@ -112,7 +112,7 @@ export default function Home() {
       } catch {}
     };
     pollCompleted();
-    const interval = setInterval(pollCompleted, 500); // 500ms
+    const interval = setInterval(pollCompleted, 500); 
     return () => clearInterval(interval);
   }, [shouldPollCompleted]);
 
@@ -208,7 +208,6 @@ export default function Home() {
     return (
       <div className="mt-10">
         <div className="flex flex-col items-center">
-          {/* Minimal spinner with subtle animation */}
           <div className="relative w-10 h-10 mb-6">
             <div className="absolute inset-0 border border-[#3a3a3a] rounded-full opacity-50"></div>
             <div className="absolute inset-0 border border-transparent border-t-[#8a8a8a] rounded-full animate-spin" style={{ animationDuration: '1s' }}></div>
@@ -241,15 +240,6 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#1a1a1a] flex items-center justify-center p-4">
       <div className="w-full max-w-md relative">
-        {/* Queue Popup Button */}
-        {/* <button
-          onClick={() => setQueueOpen(true)}
-          className="absolute top-0 right-0 z-20 px-3 py-2 bg-[#252525] border border-[#3a3a3a] rounded text-[#e8e8e8] text-xs font-light hover:bg-[#2f2f2f] hover:border-[#4a4a4a] transition-all duration-200"
-        >
-          Show Queue
-        </button> */}
-
-        {/* Queue Popup */}
         {queueOpen && (
           <div
             className="fixed inset-0 bg-black/40 z-30 flex items-center justify-end transition-opacity duration-300 animate-fadeIn"
@@ -259,9 +249,7 @@ export default function Home() {
               className="w-96 bg-[#252525] border-l border-[#3a3a3a] h-full shadow-2xl flex flex-col animate-slideInRight"
               onClick={e => e.stopPropagation()}
             >
-              {/* Current Processing Job at Top Center */}
               <div className="relative flex flex-col items-center justify-center px-5 py-6 border-b border-[#3a3a3a]">
-                {/* Close button at top right */}
                 <button
                   onClick={() => setQueueOpen(false)}
                   className="absolute top-4 right-4 text-[#e8e8e8] text-xs px-2 py-1 rounded hover:bg-[#2a2a2a]"
@@ -275,7 +263,7 @@ export default function Home() {
                   <div className="text-[#6a6a6a] text-lg font-light font-mono text-center mb-2">Idle</div>
                 )}
               </div>
-              {/* Queue Subbox - Modern, Spotify-like, numbered, separated by bars */}
+
               <div className="flex flex-col px-5 py-6 flex-1">
                 <span className="text-[#8a8a8a] text-xs font-light uppercase tracking-wider mb-3">Queue</span>
                 <div className="space-y-0">
@@ -295,7 +283,7 @@ export default function Home() {
                   ) : (
                     <div className="text-[#6a6a6a] text-sm font-light font-mono">Queue is empty</div>
                   )}
-                  {/* Separator bars */}
+
                   {queue.length > 1 && queue.map((_, idx) => idx < queue.length - 1 && (
                     <div key={"sep-" + idx} className="w-4/5 mx-auto border-t border-[#3a3a3a] opacity-60"></div>
                   ))}
@@ -305,7 +293,7 @@ export default function Home() {
           </div>
         )}
 
-        {/* Completed Jobs Sidebar */}
+
         {completedOpen && (
           <div
             className="fixed inset-0 bg-black/40 z-40 flex items-center justify-end transition-opacity duration-300 animate-fadeIn"
@@ -339,7 +327,7 @@ export default function Home() {
                           </a>
                         )}
                       </div>
-                      {/* BPM & Key */}
+\
                       {(job.bpm || job.key) && (
                         <div className="flex gap-3 ml-7 mb-2">
                           {job.bpm && (
@@ -352,7 +340,6 @@ export default function Home() {
                       )}
                       <div className="ml-7 space-y-2">
                         {job.stems && job.stems.length > 0 ? (
-                          // Sort stems: [full].mp3 first, then others
                           [...job.stems].sort((a, b) => {
                             if (a.name.endsWith('[full].mp3')) return -1;
                             if (b.name.endsWith('[full].mp3')) return 1;
@@ -382,16 +369,13 @@ export default function Home() {
           </div>
         )}
 
-        {/* Main Container */}
         <div className="bg-[#252525] border border-[#3a3a3a] rounded-lg p-8 shadow-lg transition-transform duration-200 hover:scale-[1.01] hover:shadow-xl">
-          {/* Form */}
           {!showResults && (
             <form onSubmit={async (e) => {
               await handleConvert(e);
               setUrl("");
               setName("");
             }} className="space-y-5">
-              {/* Mode Toggle - YouTube (mp3) / Stem (full pipeline) */}
               <div className="flex justify-center mb-6">
                 <div className="flex items-center gap-4">
                   <span className={`text-xs font-mono ${mode === 'youtube' ? 'text-[#818cf8]' : 'text-[#8a8a8a]'}`}>YouTube Mode</span>
@@ -404,7 +388,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* URL Input */}
               <div className="relative">
                 <input
                   type="url"
@@ -416,7 +399,6 @@ export default function Home() {
                 />
               </div>
 
-              {/* Name Input */}
               <div className="relative">
                 <input
                   type="text"
@@ -428,7 +410,6 @@ export default function Home() {
                 />
               </div>
 
-              {/* Submit Button */}
               <button
                 type="submit"
                 className="button-animated-border w-full py-3.5 bg-[#2a2a2a] border border-[#3a3a3a] text-[#e8e8e8] text-sm font-light hover:bg-[#2f2f2f] hover:border-[#4a4a4a] active:bg-[#252525] active:scale-[0.98] transition-all duration-200 shadow-sm hover:shadow-md focus:scale-105 focus:ring-2 focus:ring-[#818cf8] relative"
@@ -440,7 +421,6 @@ export default function Home() {
                 <div className="border-anim bottom"></div>
               </button>
 
-              {/* Centered Queue and Completed Buttons */}
               <div className="flex justify-center mt-4 gap-2">
                 <button
                   type="button"
@@ -468,10 +448,8 @@ export default function Home() {
             </form>
           )}
 
-          {/* Loading State */}
           {renderSpinner()}
 
-          {/* Error State */}
           {error && !isLoading && (
             <div className="mt-8">
               <div className="text-center py-3 px-4 bg-[#2a1f1f] border border-[#4a2a2a] rounded text-[#d4a4a4] text-sm">

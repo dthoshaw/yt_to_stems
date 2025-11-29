@@ -1,4 +1,5 @@
 # pipeline.py
+# Connects converter.py and splitter.py into a full YouTube to stems pipeline
 import argparse
 from pathlib import Path
 from converter import download_yt_to_mp3
