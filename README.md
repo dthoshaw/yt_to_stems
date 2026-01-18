@@ -1,6 +1,20 @@
 
 # YouTube to Stems & MP3 Web App
 
+## Project Purpose
+A local web application for music producers to seperate songs on youtube into 4-stem audio tracks (drums, bass, vocal, other) or a simple youtube to mp3 conversion.
+
+## Demo
+![MainPage](images/MainScreen.PNG)
+ - Main Page with entry form and toggle for youtube mode (just .mp3) or stem splitter
+
+![Queue](images/Queue.PNG)
+ - Job queue to prepare multiple jobs at once. I set up 3+ and leave for a good while while they work
+
+![CompletedPage](images/Completed.PNG)
+ - All completed jobs show on this sidebar. Shows the waveform for each audio track, the songs BPM, and the songs key
+
+
 ## Getting Started
 
 1. **Clone the repository**
@@ -42,16 +56,6 @@
    - Use the toggle to select YouTube mode (just mp3) or Stem mode (full separation).
    - Paste a YouTube URL and enter a track name, then submit.
    - Download YouTube audio as mp3 or split into stems.
-
-## Demo
-![MainPage](images/MainScreen.PNG)
- - Main Page with entry form and toggle for youtube mode (just .mp3) or stem splitter
-
- ![Queue](images/Queue.PNG)
- - Job queue to prepare multiple jobs at once. I set up 3+ and leave for a good while while they work
-
- ![CompletedPage](images/Completed.PNG)
- - All completed jobs show on this sidebar. Shows the waveform for each audio track, the songs BPM, and the songs key
 
 
 ## Notes
