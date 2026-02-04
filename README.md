@@ -25,7 +25,7 @@ A local web application for music producers to seperate songs on youtube into 4-
      ```
 
 2. **Install dependencies**
-    - Make sure you have Python 3.9+ and Node.js installed.
+    - Make sure you have Python 3.9+ and Next.js installed.
     - (Optional/Recommended) Create and activate a virtual environment:
        ```
        python -m venv venv
@@ -38,7 +38,7 @@ A local web application for music producers to seperate songs on youtube into 4-
        ```
        pip install -r requirements.txt
        ```
-    - Install Node.js dependencies as needed.
+    - Install Next.js dependencies as needed.
 
 3. **Run the app**
    - Use the provided `start.bat` script (Windows) to launch both the backend and frontend.
